@@ -15,7 +15,9 @@ This tool is designed for product managers, marketers, and developers to quickly
 
 **App Analyzer Screenshot:**
 <img width="1002" height="898" alt="image" src="https://github.com/user-attachments/assets/f9bee2c3-ad8d-4041-94e5-4eb7200b715b" />
-<img width="1105" height="703" alt="image" src="https://github.com/user-attachments/assets/badce583-950b-48ee-9808-cf261f2763e1" />
+
+<img width="1105" height="703" alt="image" src="https://github.com/user-attachments/assets/d2828e73-00d7-4818-b985-b17e47680c2b" />
+
 <img width="1756" height="876" alt="image" src="https://github.com/user-attachments/assets/d8f2e1b3-c559-472f-ab1c-c45e19276478" />
 
 ## Key Features
