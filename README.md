@@ -1,7 +1,7 @@
 # AppAnalyzer2.0
 An AI-powered web dashboard that analyzes Google Play Store reviews using Google's Gemini API and Sentiment Analysis to provide actionable product insights.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://colab.research.google.com/github/joyduttahere/AppAnalyzer2.0/blob/main/Share_AppAnalyzer2_0.ipynb])
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/joyduttahere/AppAnalyzer2.0/blob/main/Share_AppAnalyzer2_0.ipynb)
 <br>
 _Click the badge above to launch the interactive demo in Google Colab._
 
