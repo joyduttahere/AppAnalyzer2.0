@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critique Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Minimalist Design Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #64748b;
+            --accent: #0ea5e9;
+            --success: #059669;
+            --error: #dc2626;
+            --warning: #d97706;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            zoom: 0.85;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            overflow-y: auto;
+            box-shadow: var(--shadow-md);
+            border-right: 1px solid var(--border);
+        }
+
+        .logo-section {
+            margin-bottom: 2rem;
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-section h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.025em;
+        }
+
+        .logo-section p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        /* Form Sections */
+        .form-section { margin-bottom: 1.25rem; }
+
+        .step-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        /* Input Styles */
+        input, select, button {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.625rem 0.875rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            background: var(--bg-primary);
+            width: 100%;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+        }
+
+        /* Button Styles */
+        .btn {
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            transition: all 0.2s ease;
+            border-radius: var(--radius);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--bg-tertiary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+
+        .btn-tertiary {
+            background: var(--success);
+            color: white;
+            border: 1px solid var(--success);
+        }
+
+        .btn-tertiary:hover:not(:disabled) {
+            background: #047857;
+        }
+
+        /* Loader */
+        .loader {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Messages */
+        .message-box {
+            font-size: 0.75rem;
+            margin-top: 0.75rem;
+            padding: 0.625rem;
+            border-radius: var(--radius);
+            border-left: 3px solid;
+            font-weight: 500;
+        }
+
+        .error-message {
+            color: var(--error);
+            background: rgb(239 68 68 / 0.1);
+            border-color: var(--error);
+        }
+
+        .success-message {
+            color: var(--success);
+            background: rgb(5 150 105 / 0.1);
+            border-color: var(--success);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .welcome-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            border: 1px solid var(--border);
+        }
+
+        .welcome-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            font-size: 0.8rem;
+        }
+
+        .step-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .process-steps { margin-bottom: 1rem; }
+
+        .step-separator {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 1% auto;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 95%;
+            max-width: 1200px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .close {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .close:hover { background: rgba(255,255,255,0.2); }
+
+        .tab-container {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button.active {
+            background: white;
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tab-content.active { display: flex; }
+
+        .controls {
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+        }
+
+        .control-btn {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: inline-block; /* Add this */
+            width: auto;           /* Add this */
+            flex-shrink: 0;      /* Add this */
+        }
+
+        .control-btn.primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .control-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .control-btn.primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .count-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-left: auto;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow: auto;
+            padding: 0 1rem 1rem;
+        }
+
+        .review-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        .review-table th {
+            background: #f8f9fa;
+            padding: 0.625rem 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .review-table td {
+            padding: 0.625rem 0.5rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .review-table tr.selected { background: #dcfce7; }
+        .review-table tr:hover { background: var(--bg-secondary); }
+
+        .review-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .review-content {
+            max-width: 350px;
+            word-wrap: break-word;
+            line-height: 1.3;
+        }
+
+        .star-rating {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+
+        .loading-content {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-content .spinner {
+            border-color: rgba(255,255,255,0.3);
+            border-top-color: white;
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 1rem auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            body {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            .sidebar { padding: 1rem; }
+            .main-content { padding: 1rem; }
+        }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-tertiary); }
+        ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo-section">
+            <h1>Critique Hub</h1>
+            <p>AI-Powered Review Analysis</p>
+        </div>
+        
+        <div class="form-section">
+            <label class="step-label">
+                <span class="step-number">1</span>
+                Enter App Name
+            </label>
+            <input type="text" id="brand_name" placeholder="e.g., Google Calendar">
+        </div>
+
+        <div class="form-section">
+            <label class="step-label" for="country_select">
+                <span class="step-number">2</span>
+                Select Region
+            </label>
+            <select id="country_select" name="country">
+                
+                <option value="in" selected>India (IN)</option>
+                <option value="gb">United Kingdom (GB)</option>
+                <option value="us">United States (US)</option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <button id="search_button" class="btn btn-secondary">
+                <span id="search_text">Search for Apps</span>
+                <div id="search_loader" class="loader" style="display: none;"></div>
+            </button>
+        </div>
+
+        <div class="form-section">
+            <label class="step-label" for="app_id">
+                <span class="step-number">3</span>
+                Select App
+            </label>
+            <select id="app_id" name="app_id" required>
+                <option value="">Search first...</option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <label class="step-label">
+                <span class="step-number">4</span>
+                Present Date Range
+            </label>
+            <input type="text" id="date_range_1" placeholder="Select date range" readonly>
+        </div>
+
+        <div class="form-section">
+            <label class="step-label">
+                <span class="step-number">5</span>
+                Previous Date Range
+            </label>
+            <input type="text" id="date_range_2" placeholder="Select date range" readonly>
+        </div>
+
+        <div class="process-steps">
+            <div class="step-separator">Step 1: Data Collection</div>
+            <button id="scrape_button" class="btn btn-tertiary" disabled>
+                <span id="scrape_text">Scrape Reviews</span>
+                <div id="scrape_loader" class="loader" style="display: none;"></div>
+            </button>
+
+            <div class="step-separator">Step 2: Review Selection (Optional)</div>
+            <button id="view_cache_button" class="btn btn-secondary" disabled>
+                View & Select Reviews
+            </button>
+        </div>
+
+        <div class="step-separator">Final Step: Analysis</div>
+        <button id="analyze_button" class="btn btn-primary" disabled>
+            <span id="analyze_text">Analyze Reviews</span>
+            <div id="analyze_loader" class="loader" style="display: none;"></div>
+        </button>
+
+        <div id="error_message" class="message-box error-message" style="display: none;"></div>
+        <div id="success_message" class="message-box success-message" style="display: none;"></div>
+    </aside>
+
+    <main class="main-content" id="results_pane">
+        <div class="welcome-card">
+            <h2>Welcome to Critique Hub</h2>
+            <ol class="steps-list" style="list-style: none; padding: 0;">
+                <li>
+                    <div class="step-icon">1</div>
+                    <div>Enter an <strong>app name</strong> and click <strong>Search</strong>.</div>
+                </li>
+                <li>
+                    <div class="step-icon">2</div>
+                    <div>Select the <strong>correct app</strong> from the dropdown.</div>
+                </li>
+                <li>
+                    <div class="step-icon">3</div>
+                    <div>Select <strong>two date ranges</strong> to compare.</div>
+                </li>
+                <li>
+                    <div class="step-icon">4</div>
+                    <div>Click <strong>Scrape Reviews</strong> to collect data for analysis.</div>
+                </li>
+                <li>
+                    <div class="step-icon">5</div>
+                    <div>Optionally, click <strong>View & Select Reviews</strong> to filter the data.</div>
+                </li>
+                <li>
+                    <div class="step-icon">6</div>
+                    <div>Click <strong>Analyze Reviews</strong> to generate the dashboard.</div>
+                </li>
+            </ol>
+        </div>
+    </main>
+
+    <!-- Review Cache Viewer Modal -->
+    <div id="reviewCacheModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Review Cache Viewer</h2>
+                <span class="close">&times;</span>
+            </div>
+            
+            <div class="tab-container">
+                <button class="tab-button active" data-tab="present">Present Period</button>
+                <button class="tab-button" data-tab="previous">Previous Period</button>
+            </div>
+            
+            <div id="presentTab" class="tab-content active">
+                <div class="controls">
+                    <input type="text" class="search-box" id="presentSearch" placeholder="Search by text...">
+                    
+                    <!-- NEW: Filter by Rating -->
+                    <select id="presentRatingFilter" class="control-btn" style="width: auto;">
+                        <option value="0">All Ratings</option>
+                        <option value="5">5 ★ Only</option>
+                        <option value="4">4 ★ Only</option>
+                        <option value="3">3 ★ Only</option>
+                        <option value="2">2 ★ Only</option>
+                        <option value="1">1 ★ Only</option>
+                    </select>
+
+                    <!-- NEW: Filter by Username -->
+                    <input type="text" class="search-box" id="presentUserFilter" placeholder="Search by user...">
+
+                    <button class="control-btn" id="presentSelectAll">Select All</button>
+                    <button class="control-btn" id="presentClearAll">Clear All</button>
+                    <div class="count-info" id="presentCount">0 reviews</div>
+                </div>
+                <div class="table-container">
+                    <table class="review-table">
+                        <thead>
+                            <tr>
+                                <th width="40">Select</th>
+                                <th width="60">Rating</th>
+                                <th width="120">User</th> <!-- ADDED THIS COLUMN -->
+                                <th width="80">Date</th>
+                                <th>Review Content</th>
+                            </tr>
+                        </thead>
+                        <tbody id="presentTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="previousTab" class="tab-content">
+                <div class="controls">
+                    <input type="text" class="search-box" id="previousSearch" placeholder="Search by text...">
+
+                    <!-- NEW: Filter by Rating -->
+                    <select id="previousRatingFilter" class="control-btn" style="width: auto;">
+                        <option value="0">All Ratings</option>
+                        <option value="5">5 ★ Only</option>
+                        <option value="4">4 ★ Only</option>
+                        <option value="3">3 ★ Only</option>
+                        <option value="2">2 ★ Only</option>
+                        <option value="1">1 ★ Only</option>
+                    </select>
+
+                    <!-- NEW: Filter by Username -->
+                    <input type="text" class="search-box" id="previousUserFilter" placeholder="Search by user...">
+
+                    <button class="control-btn" id="previousSelectAll">Select All</button>
+                    <button class="control-btn" id="previousClearAll">Clear All</button>
+                    <div class="count-info" id="previousCount">0 reviews</div>
+                </div>
+                <div class="table-container">
+                    <table class="review-table">
+                        <thead>
+                            <tr>
+                                <th width="40">Select</th>
+                                <th width="60">Rating</th>
+                                <th width="120">User</th> <!-- ADDED THIS COLUMN -->
+                                <th width="80">Date</th>
+                                <th>Review Content</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody id="previousTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="control-btn" id="cancelBtn">Cancel</button>
+                <button class="control-btn primary" id="saveBtn">Save Selection</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+    <script>
+        // Review Cache Viewer Class with Fixed Functionality
+        class ReviewCacheViewer {
+            constructor() {
+                this.modal = document.getElementById('reviewCacheModal');
+                this.presentReviews = [];
+                this.previousReviews = [];
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                this.modal.querySelector('.close').onclick = () => this.closeModal();
+                this.modal.querySelector('#cancelBtn').onclick = () => this.closeModal();
+                this.modal.querySelector('#saveBtn').onclick = () => this.saveAndAnalyze();
+                
+                this.modal.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.onclick = () => this.switchTab(btn.dataset.tab);
+                });
+                
+                this.modal.querySelector('#presentSelectAll').onclick = () => this.selectAll('present');
+                this.modal.querySelector('#presentClearAll').onclick = () => this.clearAll('present');
+                this.modal.querySelector('#previousSelectAll').onclick = () => this.selectAll('previous');
+                this.modal.querySelector('#previousClearAll').onclick = () => this.clearAll('previous');
+                
+                this.modal.querySelector('#presentSearch').oninput = () => this.renderTable('present');
+                this.modal.querySelector('#presentRatingFilter').onchange = () => this.renderTable('present');
+                this.modal.querySelector('#presentUserFilter').oninput = () => this.renderTable('present');
+                
+                this.modal.querySelector('#previousSearch').oninput = () => this.renderTable('previous');
+                this.modal.querySelector('#previousRatingFilter').onchange = () => this.renderTable('previous');
+                this.modal.querySelector('#previousUserFilter').oninput = () => this.renderTable('previous');
+                
+                window.onclick = (e) => { if (e.target === this.modal) this.closeModal(); };
+            }
+
+            async openModal(formData) {
+                this.modal.style.display = 'block';
+                this.showLoading();
+                try {
+                    const response = await fetch('/view-cache', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Failed to load reviews');
+                    }
+                    const data = await response.json();
+                    this.presentReviews = data.present_reviews || [];
+                    this.previousReviews = data.previous_reviews || [];
+                    this.renderReviews();
+                } catch (error) {
+                    this.showError(error.message);
+                }
+            }
+
+            closeModal() { this.modal.style.display = 'none'; }
+
+            switchTab(tabName) {
+                this.modal.querySelectorAll('.tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
+                this.modal.querySelectorAll('.tab-content').forEach(content => content.classList.toggle('active', content.id === tabName + 'Tab'));
+            }
+
+            getFilteredReviews(tab) {
+                const reviews = tab === 'present' ? this.presentReviews : this.previousReviews;
+                
+                // Get the values from all three filter inputs
+                const textQuery = this.modal.querySelector(`#${tab}Search`).value.toLowerCase();
+                const ratingQuery = parseInt(this.modal.querySelector(`#${tab}RatingFilter`).value);
+                const userQuery = this.modal.querySelector(`#${tab}UserFilter`).value.toLowerCase();
+
+                // If all filters are empty, return all reviews
+                if (!textQuery && ratingQuery === 0 && !userQuery) {
+                    return reviews;
+                }
+
+                // Apply filters sequentially
+                return reviews.filter(r => {
+                    const textMatch = !textQuery || r.full_content.toLowerCase().includes(textQuery);
+                    const ratingMatch = ratingQuery === 0 || r.score === ratingQuery;
+                    const userMatch = !userQuery || (r.userName && r.userName.toLowerCase().includes(userQuery));
+                    
+                    return textMatch && ratingMatch && userMatch;
+                });
+            }
+
+            searchReviews(tab, query) {
+                const reviews = tab === 'present' ? this.presentReviews : this.previousReviews;
+                const filtered = query ? reviews.filter(r => 
+                    r.full_content.toLowerCase().includes(query.toLowerCase())
+                ) : reviews;
+                this.renderTable(tab, filtered);
+            }
+
+            selectAll(tab) {
+                const visibleReviews = this.getFilteredReviews(tab);
+                visibleReviews.forEach(review => { review.selected = true; });
+                this.renderTable(tab); // Re-render to show changes
+            }
+                
+            clearAll(tab) {
+                const visibleReviews = this.getFilteredReviews(tab);
+                visibleReviews.forEach(review => { review.selected = false; });
+                this.renderTable(tab); // Re-render to show changes
+            }
+
+            renderReviews() {
+                this.renderTable('present');
+                this.renderTable('previous');
+            }
+
+            renderTable(tab) {
+                const reviewsToRender = this.getFilteredReviews(tab);
+                const tableBody = this.modal.querySelector(`#${tab}TableBody`);
+                
+                if (reviewsToRender.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="4" class="empty-state">No reviews match your filter.</td></tr>`;
+                } else {
+                    tableBody.innerHTML = reviewsToRender.map(r => `
+                        <tr data-id="${r.id}" class="${r.selected ? 'selected' : ''}">
+                            <td><input type="checkbox" class="review-checkbox" data-id="${r.id}" ${r.selected ? 'checked' : ''}></td>
+                            <td class="star-rating">${'★'.repeat(r.score)}${'☆'.repeat(5 - r.score)}</td>
+                            <td>${r.userName || 'N/A'}</td> <!-- ADDED THIS LINE TO DISPLAY THE USERNAME -->
+                            <td>${r.at}</td>
+                            <td class="review-content" title="${r.full_content}">${r.content}</td>
+                        </tr>`).join('');
+                }
+                
+                tableBody.querySelectorAll('.review-checkbox').forEach(cb => {
+                    cb.onchange = (e) => this.toggleReview(tab, parseInt(e.target.dataset.id), e.target.checked);
+                });
+                this.updateCount(tab);
+            }
+
+            toggleReview(tab, reviewId, isSelected) {
+                const reviews = (tab === 'present' ? this.presentReviews : this.previousReviews);
+                const review = reviews.find(r => r.id === reviewId);
+                if (review) review.selected = isSelected;
+                this.modal.querySelector(`tr[data-id="${reviewId}"]`)?.classList.toggle('selected', isSelected);
+                this.updateCount(tab);
+            }
+
+            updateCount(tab) {
+                const totalReviews = tab === 'present' ? this.presentReviews : this.previousReviews;
+                const filteredReviews = this.getFilteredReviews(tab);
+                const selectedCount = totalReviews.filter(r => r.selected).length;
+                
+                let countText = `${selectedCount} / ${totalReviews.length} selected`;
+                if (filteredReviews.length !== totalReviews.length) {
+                    countText += ` (${filteredReviews.length} visible)`;
+                }
+                this.modal.querySelector(`#${tab}Count`).textContent = countText;
+            }
+
+            saveAndAnalyze() {
+                this.closeModal();
+                // Pass selected reviews to analyze function
+                const selectedPresentIds = this.presentReviews.filter(r => r.selected).map(r => r.id);
+                const selectedPreviousIds = this.previousReviews.filter(r => r.selected).map(r => r.id);
+                
+                // Store selections for analysis
+                window.selectedReviews = {
+                    present: selectedPresentIds,
+                    previous: selectedPreviousIds
+                };
+                window.mainApp.showSuccess("Review selections are ready for analysis.");
+                // Trigger analysis
+                //document.getElementById('analyze_button').click();
+            }
+
+            showLoading() {
+                const loadingHtml = `<tr><td colspan="4" class="loading"><div class="spinner"></div>Loading...</td></tr>`;
+                this.modal.querySelector('#presentTableBody').innerHTML = loadingHtml;
+                this.modal.querySelector('#previousTableBody').innerHTML = loadingHtml;
+            }
+
+            showError(message) {
+                const errorHtml = `<tr><td colspan="4" class="empty-state">⚠️ ${message}</td></tr>`;
+                this.modal.querySelector('#presentTableBody').innerHTML = errorHtml;
+                this.modal.querySelector('#previousTableBody').innerHTML = errorHtml;
+            }
+        }
+
+        // Loading overlay functions
+        function showLoading(message = "Processing...") {
+            const overlay = document.createElement('div');
+            overlay.id = 'loading-overlay';
+            overlay.innerHTML = `
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <p>${message}</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            if (overlay) overlay.remove();
+        }
+
+        // Main Application Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewCacheViewer = new ReviewCacheViewer();
+            
+            // Initialize date pickers
+            new Litepicker({
+                element: document.getElementById('date_range_1'),
+                singleMode: false,
+                format: 'YYYY-MM-DD',
+                delimiter: ' - ',
+                autoApply: true
+            });
+            
+            new Litepicker({
+                element: document.getElementById('date_range_2'),
+                singleMode: false,
+                format: 'YYYY-MM-DD',
+                delimiter: ' - ',
+                autoApply: true
+            });
+
+            // Get elements
+            const searchButton = document.getElementById('search_button');
+            const scrapeButton = document.getElementById('scrape_button');
+            const viewCacheButton = document.getElementById('view_cache_button');
+            const analyzeButton = document.getElementById('analyze_button');
+            const brandNameInput = document.getElementById('brand_name');
+            const appIdSelect = document.getElementById('app_id');
+            const countrySelect = document.getElementById('country_select');
+            const resultsPane = document.getElementById('results_pane');
+            const errorMessageEl = document.getElementById('error_message');
+            const successMessageEl = document.getElementById('success_message');
+            
+            // Helper functions
+            const getFormData = () => ({ 
+                app_id: appIdSelect.value, 
+                date_range_1: document.getElementById('date_range_1').value, 
+                date_range_2: document.getElementById('date_range_2').value,
+                country: countrySelect.value
+            });
+
+            const showError = (message) => {
+                errorMessageEl.textContent = message;
+                errorMessageEl.style.display = 'block';
+                successMessageEl.style.display = 'none';
+            };
+
+            const showSuccess = (message) => {
+                successMessageEl.textContent = message;
+                successMessageEl.style.display = 'block';
+                errorMessageEl.style.display = 'none';
+            };
+
+            const hideMessages = () => {
+                errorMessageEl.style.display = 'none';
+                successMessageEl.style.display = 'none';
+            };
+
+            const toggleLoading = (isLoading, type) => {
+                const allButtons = [searchButton, scrapeButton, analyzeButton, viewCacheButton];
+                allButtons.forEach(btn => btn.disabled = isLoading);
+                
+                const uiMap = {
+                    search: { textEl: document.getElementById('search_text'), loaderEl: document.getElementById('search_loader') },
+                    scrape: { textEl: document.getElementById('scrape_text'), loaderEl: document.getElementById('scrape_loader') },
+                    analyze: { textEl: document.getElementById('analyze_text'), loaderEl: document.getElementById('analyze_loader') }
+                };
+
+                if (uiMap[type]) {
+                    uiMap[type].textEl.style.display = isLoading ? 'none' : 'inline-block';
+                    uiMap[type].loaderEl.style.display = isLoading ? 'inline-block' : 'none';
+                }
+
+                if (!isLoading) {
+                    searchButton.disabled = false;
+                    if (appIdSelect.value) scrapeButton.disabled = false;
+                }
+            };
+
+            // Event listeners
+            searchButton.addEventListener('click', async () => {
+                const brandName = brandNameInput.value.trim();
+                if (!brandName) {
+                    showError("Please enter an app name.");
+                    return;
+                }
+                
+                hideMessages();
+                toggleLoading(true, 'search');
+                
+                try {
+                    const response = await fetch('/search-apps', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ brand_name: brandName, country: countrySelect.value })
+                    });
+                    
+                    const apps = await response.json();
+                    if (!response.ok) throw new Error(apps.error || 'Search failed.');
+                    
+                    appIdSelect.innerHTML = '<option value="">-- Select an App --</option>';
+                    apps.forEach(app => appIdSelect.add(new Option(app.text, app.id)));
+                    
+                    if (apps.length > 0) {
+                        showSuccess(`Found ${apps.length} apps.`);
+                    } else {
+                        showError('No apps found.');
+                    }
+                } catch (err) {
+                    showError(err.message);
+                } finally {
+                    toggleLoading(false, 'search');
+                }
+            });
+
+            scrapeButton.addEventListener('click', async () => {
+                const formData = getFormData();
+                if (!formData.app_id || !formData.date_range_1 || !formData.date_range_2) {
+                    showError("Please complete steps 3, 4, and 5.");
+                    return;
+                }
+                
+                hideMessages();
+                toggleLoading(true, 'scrape');
+                showLoading("Scraping reviews... This may take a few minutes.");
+                
+                try {
+                    const response = await fetch('/scrape-reviews', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'Scraping failed.');
+                    
+                    showSuccess(`Reviews loaded: Present: ${result.present_count}, Previous: ${result.previous_count}`);
+                    viewCacheButton.disabled = false;
+                    analyzeButton.disabled = false;
+                } catch (err) {
+                    showError(err.message);
+                } finally {
+                    toggleLoading(false, 'scrape');
+                    hideLoading();
+                }
+            });
+
+            viewCacheButton.addEventListener('click', () => {
+                const formData = getFormData();
+                if (!formData.app_id || !formData.date_range_1 || !formData.date_range_2) {
+                    showError("Please complete steps 3, 4, and 5.");
+                    return;
+                }
+                reviewCacheViewer.openModal(formData);
+            });
+
+            analyzeButton.addEventListener('click', async () => {
+                let formData = getFormData();
+                if (!formData.app_id || !formData.date_range_1 || !formData.date_range_2) {
+                    showError("Please complete steps 3, 4, and 5.");
+                    return;
+                }
+
+                // Add selected review IDs if available
+                if (window.selectedReviews) {
+                    formData.selected_present_ids = window.selectedReviews.present;
+                    formData.selected_previous_ids = window.selectedReviews.previous;
+                }
+                
+                hideMessages();
+                toggleLoading(true, 'analyze');
+                showLoading("Analyzing reviews... This may take several minutes for large datasets.");
+                
+                try {
+                    const response = await fetch('/analyze', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'Analysis failed.');
+                    
+                    resultsPane.innerHTML = result.html;
+                    showSuccess('Analysis complete!');
+                } catch (err) {
+                    showError(err.message);
+                } finally {
+                    toggleLoading(false, 'analyze');
+                    hideLoading();
+                }
+            });
+
+            // Enable scrape button when app is selected
+            appIdSelect.addEventListener('change', () => {
+                scrapeButton.disabled = !appIdSelect.value;
+            });
+        });
+    </script>
+</body>
+</html>
