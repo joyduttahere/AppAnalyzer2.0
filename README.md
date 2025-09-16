@@ -1,7 +1,7 @@
 # AppAnalyzer2.0
 An AI-powered web dashboard that analyzes Google Play Store reviews using Google's Gemini API and Sentiment Analysis to provide actionable product insights.
 
-[![Open In Colab]([https://colab.research.google.com/github/joyduttahere/AppAnalyzer2.0/blob/main/Share_AppAnalyzer2_0.ipynb])
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://colab.research.google.com/github/joyduttahere/AppAnalyzer2.0/blob/main/Share_AppAnalyzer2_0.ipynb])
 <br>
 _Click the badge above to launch the interactive demo in Google Colab._
 
@@ -13,7 +13,8 @@ _Click the badge above to launch the interactive demo in Google Colab._
 
 This tool is designed for product managers, marketers, and developers to quickly understand user feedback, track issues over time, and identify key areas for improvement. It features a sophisticated, interactive interface for scraping, filtering, and analyzing reviews in a seamless workflow.
 
-![App Analyzer Screenshot](<img width="1002" height="898" alt="image" src="https://github.com/user-attachments/assets/f9bee2c3-ad8d-4041-94e5-4eb7200b715b" />)
+![App Analyzer Screenshot]
+<img width="1002" height="898" alt="image" src="https://github.com/user-attachments/assets/f9bee2c3-ad8d-4041-94e5-4eb7200b715b" />
 <img width="1105" height="703" alt="image" src="https://github.com/user-attachments/assets/badce583-950b-48ee-9808-cf261f2763e1" />
 <img width="1756" height="876" alt="image" src="https://github.com/user-attachments/assets/d8f2e1b3-c559-472f-ab1c-c45e19276478" />
 
