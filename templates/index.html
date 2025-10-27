@@ -1075,13 +1075,19 @@
                     toggleLoading(false, 'search');
                 }
             });
-
-            scrapeButton.addEventListener('click', async () => {
-                const formData = getFormData();
-                if (!formData.app_id || !formData.date_range_1 || !formData.date_range_2) {
-                    showError("Please complete steps 3, 4, and 5.");
-                    return;
-                }
+scrapeButton.addEventListener('click', async () => {
+    const formData = getFormData();
+    
+    // ADD THIS VALIDATION
+    if (!appIdSelect.value || appIdSelect.value === '' || appIdSelect.selectedIndex === 0) {
+        showError("Please select an app from the dropdown first.");
+        return;
+    }
+    
+    if (!formData.app_id || !formData.date_range_1 || !formData.date_range_2) {
+        showError("Please complete steps 3, 4, and 5.");
+        return;
+    }
                 
                 hideMessages();
                 toggleLoading(true, 'scrape');
