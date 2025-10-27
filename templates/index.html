@@ -1076,10 +1076,14 @@
                 }
             });
 scrapeButton.addEventListener('click', async () => {
-    if (!appIdSelect.value || appIdSelect.value === '' || appIdSelect.value === 'null') {
-        showError("Please select an app from the dropdown first (Step 3).");
-        return;
+    appIdSelect.addEventListener('change', () => {
+    console.log('App selected:', appIdSelect.value);
+    const hasValidApp = appIdSelect.value && appIdSelect.value !== '';
+    scrapeButton.disabled = !hasValidApp;
+    if (hasValidApp) {
+        hideMessages();
     }
+});
     
     const formData = getFormData();
     
@@ -1178,4 +1182,5 @@ scrapeButton.addEventListener('click', async () => {
 </body>
 
 </html>
+
 
