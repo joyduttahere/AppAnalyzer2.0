@@ -1061,7 +1061,7 @@
                     const apps = await response.json();
                     if (!response.ok) throw new Error(apps.error || 'Search failed.');
                     
-                    appIdSelect.innerHTML = '<option value="">-- Select an App --</option>';
+                    appIdSelect.innerHTML = ''; // Remove the placeholder completely
                     apps.forEach(app => appIdSelect.add(new Option(app.text, app.id)));
                     
                     if (apps.length > 0) {
@@ -1178,3 +1178,4 @@ scrapeButton.addEventListener('click', async () => {
 </body>
 
 </html>
+
